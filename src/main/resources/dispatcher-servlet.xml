@@ -12,9 +12,9 @@
     </context:component-scan>
 
     <!--视图解析器-->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="suffix" value=".jsp"/>
         <property name="prefix" value="/WEB-INF/pages/"/>
-    </bean>
+    </bean>-->
 
 </beans>
