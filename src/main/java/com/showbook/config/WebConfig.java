@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,10 +27,10 @@ import javax.servlet.ServletContext;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
+    /*@Bean
     public LoginInterceptor loginInterceptor(){
         return new LoginInterceptor();
-    }
+    }*/
 
     /**
      *  注册自定义拦截器
@@ -37,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/login");
+        //registry.addInterceptor(loginInterceptor()).addPathPatterns("/login");
     }
 
 
@@ -72,4 +73,5 @@ public class WebConfig implements WebMvcConfigurer {
         thymeleafViewResolver.setCharacterEncoding("UTF-8");
         return  thymeleafViewResolver;
     }
+
 }
