@@ -31,10 +31,15 @@ public class WebConfig implements WebMvcConfigurer {
         return new LoginInterceptor();
     }
 
+    /**
+     *  注册自定义拦截器
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor()).addPathPatterns("/login");
     }
+
 
     /**
      * 用于设置前缀和后缀

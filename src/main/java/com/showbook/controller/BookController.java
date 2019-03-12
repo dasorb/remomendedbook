@@ -22,12 +22,12 @@ public class BookController {
     @RequestMapping("/book/{id}")
     @ResponseBody
     public BookDetail getBook(@PathVariable("id")Integer id, Model model){
-
         //通过路径中的id值，查询到相应书籍，返回对应的信息
         BookDetail bookDetail = bookService.queryBookDetail(id);
-
         return bookDetail;
     }
+
+
 
     public BookService getBookService() {
         return bookService;
