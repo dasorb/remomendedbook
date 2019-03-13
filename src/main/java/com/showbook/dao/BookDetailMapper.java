@@ -4,6 +4,8 @@ import com.showbook.pojo.BookDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  *
  * @author chenjie
@@ -14,5 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface BookDetailMapper {
 
     BookDetail queryBookDetailById (Integer id);
+
+    List<BookDetail> queryBooks();
 
 }

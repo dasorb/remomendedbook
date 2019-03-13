@@ -4,4 +4,8 @@
     <select id="queryBookDetailById" parameterType="Integer" resultType="com.showbook.pojo.BookDetail">
         select * from t_bookDetail where book_id=#{id}
     </select>
+
+    <select id="queryBooks" resultType="com.showbook.pojo.BookDetail">
+        select * from t_bookDetail
+    </select>
 </mapper>

@@ -1,6 +1,9 @@
 package com.showbook.service;
 
+import com.github.pagehelper.PageInfo;
 import com.showbook.pojo.BookDetail;
+
+import java.util.List;
 
 /**
  * @author chenjie
@@ -9,5 +12,7 @@ import com.showbook.pojo.BookDetail;
 public interface BookService {
 
     BookDetail queryBookDetail(Integer id);
+
+    PageInfo<BookDetail> queryBooks(int currentPage, int pageSize);
 
 }

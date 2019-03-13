@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="res/layui/css/layui.css" th:href="@{static/layui/css/layui.css}">
+    <link rel="stylesheet" href="custom.css" th:href="@{asserts/css/custom.css}">
+</head>
+<body>
+    <div class="layui-header header">
+        <div class="layui-main">
+            <a style="position: absolute;left: 0;top: 16px;">
+                <img th:src="@{asserts/img/logo.png}" src="logo.png" alt="logo" style="width: 80px;height: 35px">
+            </a>
+            <ul class="layui-nav layui-layout-right" lay-filter="">
+                <li class="layui-nav-item layui-this"><a href="">首页</a></li>
+                <li class="layui-nav-item "><a href="">图书推荐</a></li>
+                <li class="layui-nav-item"><a href="">图书排行</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">书目分类</a>
+                    <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                        <dd><a href="">科学</a></dd>
+                        <dd><a href="">技术</a></dd>
+                        <dd><a href="">小说</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">个人中心</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--<span th:text="${booklists.list}"></span>-->
+
+    <div class="layui-main" >
+        <div class="layui-container" id="content-container">
+            <!--插入内容-->
+        </div>
+        <div id="page-container"></div>
+    </div>
+
+    <!--footer-->
+    <div class="footer-custom layui-footer" style="padding: 30px 0;line-height: 30px;text-align: center;color: #666;font-weight: 300;">
+        <div class="layui-main">
+            <p>© 2019 layui.com MIT license</p>
+        </div>
+    </div>
+
+    <script th:src="@{static/jquery-3.2.1.js}"></script>
+<script th:src="@{static/layui/layui.all.js}" src="res/layui/layui.all.js"></script>
+<script th:inline="javascript">
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+        //…
+    });
+
+    window.onload=function () {
+        loadData();//首次请求数据
+        getPage();//分页操作
+    }
+    var page = 1;
+    var limit = 4;
+    var total ;
+
+    //首次请求
+    function loadData(){
+        $.ajax({
+            type:"post",
+            async:false,
+            url:"showIndexContentByPage",
+            dataType: 'json',
+            data:{
+                "page":page,
+                "limit":limit
+            },
+            success:function (ret) {
+                /*for(var i=0; i<ret.length; i++) {
+                    console.log(ret[i].author);
+                }*/
+                total = ret.total;
+                var content = "";
+                for(var i = 0; i < ret.data.length; i++) {
+                    content = content +  "<!--一行图书信息-->\n" +
+                        "        <div class=\"layui-row layui-col-space10\" style=\"margin-top: 15px\">\n" +
+                        "            <!--图片封面-->\n" +
+                        "            <div class=\"layui-col-md2\" >\n" +
+                        "                <a>\n" +
+                        "                    <img src=\"asserts/img/bookthumb/"+ret.data[i].isbnNum+".jpg\" alt=\"封面\" class=\"thumb\"/>\n" +
+                        "                </a>\n" +
+                        "            </div>\n" +
+                        "            <!--右侧信息-->\n" +
+                        "            <div class=\"layui-col-md9\">\n" +
+                        "                <div class=\"layui-row\" >\n" +
+                        "                    <!--文章标题-->\n" +
+                        "                    <div class=\"layui-col-md12\">\n" +
+                        "                        <sapn class=\"article-title\" >"+ret.data[i].bookName+"</sapn>\n" +
+                        "                        <hr/>\n" +
+                        "                    </div>\n" +
+                        "                    <!--文章简介-->\n" +
+                        "                    <div class=\"layui-col-md12\">\n" +
+                        "                            <span class=\"article-intro\">\n" + ret.data[i].note+
+                        "                            </span>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>\n" +
+                        "        </div>\n" +
+                        "    </div>\n";
+                }
+                $("#content-container").empty().append(content);
+            }
+        });
+    }
+
+    //分页请求
+    function getPage() {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+            //执行一个实例
+            laypage.render({
+                elem:'page-container'
+                ,count:total
+                ,limit:limit
+                ,jump:function (obj, first) {
+                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    console.log(obj.limit); //得到每页显示的条数
+                    page=obj.curr;
+                    limit=obj.limit;
+                    //首次不执行
+                    if(!first){
+                        loadData()  //加载数据
+                    }
+                }
+            });
+        });
+    }
+
+
+</script>
+</body>
+</html>
