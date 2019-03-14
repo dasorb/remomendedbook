@@ -13,6 +13,7 @@
 
     <div class="layui-main">
         <div class="layui-container">
+            <a th:href="@{/user/loginout}">登出</a>
             这里是个人中心
             <div th:text="${#httpServletRequest.getRequestURL() +'?'+ #httpServletRequest.getQueryString() }"></div>
             <div th:text="${#httpServletRequest.requestURL +'?'+ #httpServletRequest.queryString }"></div>
