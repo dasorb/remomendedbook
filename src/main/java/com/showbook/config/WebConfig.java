@@ -27,10 +27,10 @@ import javax.servlet.ServletContext;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    /*@Bean
+    @Bean
     public LoginInterceptor loginInterceptor(){
         return new LoginInterceptor();
-    }*/
+    }
 
     /**
      *  注册自定义拦截器
@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //registry.addInterceptor(loginInterceptor()).addPathPatterns("/login");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/user/center");
     }
 
 

@@ -8,25 +8,7 @@
 </head>
 <body>
     <div class="layui-header header">
-        <div class="layui-main">
-            <a style="position: absolute;left: 0;top: 16px;">
-                <img th:src="@{asserts/img/logo.png}" src="logo.png" alt="logo" style="width: 80px;height: 35px">
-            </a>
-            <ul class="layui-nav layui-layout-right" lay-filter="">
-                <li class="layui-nav-item layui-this"><a href="">首页</a></li>
-                <li class="layui-nav-item "><a href="">图书推荐</a></li>
-                <li class="layui-nav-item"><a href="">图书排行</a></li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">书目分类</a>
-                    <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                        <dd><a href="">科学</a></dd>
-                        <dd><a href="">技术</a></dd>
-                        <dd><a href="">小说</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">个人中心</a></li>
-            </ul>
-        </div>
+        <div th:replace="common :: header"></div>
     </div>
     <!--<span th:text="${booklists.list}"></span>-->
 
@@ -34,7 +16,9 @@
         <div class="layui-container" id="content-container">
             <!--插入内容-->
         </div>
-        <div id="page-container"></div>
+        <div class="layui-container">
+            <div id="page-container"></div>
+        </div>
     </div>
 
     <!--footer-->
@@ -44,8 +28,9 @@
         </div>
     </div>
 
-    <script th:src="@{static/jquery-3.2.1.js}"></script>
+<script th:src="@{static/jquery-3.2.1.js}"></script>
 <script th:src="@{static/layui/layui.all.js}" src="res/layui/layui.all.js"></script>
+    <div th:replace="common :: nav-select"></div>
 <script th:inline="javascript">
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
     layui.use('element', function(){
@@ -58,7 +43,7 @@
         getPage();//分页操作
     }
     var page = 1;
-    var limit = 4;
+    var limit = 5;
     var total ;
 
     //首次请求
@@ -73,9 +58,6 @@
                 "limit":limit
             },
             success:function (ret) {
-                /*for(var i=0; i<ret.length; i++) {
-                    console.log(ret[i].author);
-                }*/
                 total = ret.total;
                 var content = "";
                 for(var i = 0; i < ret.data.length; i++) {

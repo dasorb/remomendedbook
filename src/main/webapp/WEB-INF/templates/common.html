@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>其他页面需要引入的组件存放页面</title>
+    <link rel="stylesheet" href="res/layui/css/layui.css" th:href="@{/static/layui/css/layui.css}">
+</head>
+<body>
+
+        <div class="layui-main" th:fragment="header">
+            <a style="position: absolute;left: 0;top: 16px;">
+                <img th:src="@{/asserts/img/logo.png}" src="logo.png" alt="logo" style="width: 80px;height: 35px">
+            </a>
+            <ul class="layui-nav layui-layout-right" lay-filter="">
+                <li class="layui-nav-item book-index" ><a  th:href="@{/}">首页</a></li>
+                <li class="layui-nav-item  book-rec"><a href="">图书推荐</a></li>
+                <li class="layui-nav-item book-rank"><a href="">图书排行</a></li>
+                <li class="layui-nav-item book-cate">
+                    <a href="javascript:;">书目分类</a>
+                    <dl class="layui-nav-child " > <!-- 二级菜单 -->
+                        <dd><a href="">科学</a></dd>
+                        <dd><a href="">技术</a></dd>
+                        <dd><a href="">小说</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item user-center"><a href="" th:href="@{/user/center}">个人中心</a></li>
+            </ul>
+        </div>
+
+
+</body>
+
+<script th:src="@{/static/jquery-3.2.1.js}"></script>
+<script th:src="@{/static/layui/layui.all.js}" src="res/layui/layui.all.js"></script>
+<script th:inline="javascript" th:fragment="nav-select">
+    $(function () {
+        var keyword = "" + [[${#httpServletRequest.requestURL}]];
+        if(keyword.search("user") != -1) {
+            $(".user-center").addClass('layui-this').siblings().removeClass('layui-this');
+        } else if(keyword.search("rec") != -1) {
+            $(".book-rec").addClass('layui-this').siblings().removeClass('layui-this');
+        } else {
+            $(".book-index").addClass('layui-this').siblings().removeClass('layui-this');
+        }
+        console.log();
+    });
+</script>
+
+</html>

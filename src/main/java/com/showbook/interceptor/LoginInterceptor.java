@@ -17,21 +17,21 @@ import java.io.IOException;
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         String login_status = null;
+
         if(session.getAttribute("LOGIN_STATUS") != null) {
             login_status = session.getAttribute("LOGIN_STATUS").toString();
         }
-        //如果用户已经登陆，跳转到首页
+        //如果用户登陆
         if("ok".equals(login_status)) {
-            try {
-                response.sendRedirect(request.getContextPath()+"/index.jsp");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //用户没有登陆
+            return true;
+                //response.sendRedirect(request.getContextPath()+"/user/getLogin");
         }
-        return true;
+        response.sendRedirect(request.getContextPath()+"/user/getLogin");
+        return false;
     }
 
     @Override
