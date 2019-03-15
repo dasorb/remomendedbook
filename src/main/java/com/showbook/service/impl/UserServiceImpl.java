@@ -7,6 +7,7 @@ import com.showbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,45 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    /**
+     * 用户名是否存在
+     * @param username
+     * @return
+     */
+    @Override
+    public boolean isExistUsername(String username) {
+
+        TUserExample tUserExample = new TUserExample();
+        TUserExample.Criteria criteria = tUserExample.createCriteria();
+        criteria.andUsernameEqualTo(username);
+
+        List<TUser> tUsers = userMapper.selectByExample(tUserExample);
+
+        if (!tUsers.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 注册用户
+     *
+     */
+    @Override
+    public void insertUser(String username, String password) {
+        TUser tUser = new TUser();
+        Date now = new Date();
+        tUser.setRegisterDate(now);
+        tUser.setLastLoginDate(now);
+        tUser.setUsername(username);
+        tUser.setPassword(password);
+
+        userMapper.insert(tUser);
+    }
+
+
+
 
     public TUserMapper getUserMapper() {
         return userMapper;

@@ -13,4 +13,8 @@ public interface UserService {
     TUser getUserByUserName(String userName);
 
     boolean validatePassword(String userPassword , String inPassword);
+
+    boolean isExistUsername(String username);
+
+    void insertUser(String username, String password);
 }
